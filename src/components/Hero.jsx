@@ -1,33 +1,29 @@
-import { motion } from 'framer-motion';
-import { Download, Github, Linkedin, Instagram } from 'lucide-react';
-import { socialLinks, resumeUrl } from '../data/links';
-<img src="/leetcode.svg" alt="LeetCode" className="w-5 h-5" />
-
-
-
+import { motion } from "framer-motion";
+import { Download, Github, Linkedin } from "lucide-react";
+import { socialLinks, resumeUrl } from "../data/links";
+import LeetCodeIcon from "../icons/LeetCodeIcon";
 
 const Hero = () => {
   const handleResumeDownload = () => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = resumeUrl;
-    link.target = '_blank';
-    link.download = 'Kollepara_Chakravarthi_Resume.pdf';
+    link.target = "_blank";
+    link.download = "Kollepara_Chakravarthi_Resume.pdf";
     link.click();
   };
 
   const getSocialIcon = (name) => {
-  switch (name) {
-    case "GitHub":
-      return <Github size={20} />;
-    case "LinkedIn":
-      return <Linkedin size={20} />;
-    case "LeetCode":
-      return <img src={LeetCode} alt="LeetCode" className="w-5 h-5" />;
-    default:
-      return null;
-  }
-};
-
+    switch (name) {
+      case "GitHub":
+        return <Github size={20} />;
+      case "LinkedIn":
+        return <Linkedin size={20} />;
+      case "LeetCode":
+        return <LeetCodeIcon size={20} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <section id="about-me" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
