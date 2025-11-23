@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Download, Github, Linkedin, Instagram } from 'lucide-react';
 import { socialLinks, resumeUrl } from '../data/links';
-import LeetCode from "../assets/leetcode.svg";
+<img src="/leetcode.svg" alt="LeetCode" className="w-5 h-5" />
 
 
 
