@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import LeetCodeLogo from "../assets/leetcode.svg";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

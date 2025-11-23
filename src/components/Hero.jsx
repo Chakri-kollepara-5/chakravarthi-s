@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion';
 import { Download, Github, Linkedin, Instagram } from 'lucide-react';
 import { socialLinks, resumeUrl } from '../data/links';
+import LeetCode from "../assets/leetcode.svg";
+
+
+
 
 const Hero = () => {
   const handleResumeDownload = () => {
@@ -12,17 +16,18 @@ const Hero = () => {
   };
 
   const getSocialIcon = (name) => {
-    switch (name) {
-      case 'GitHub':
-        return <Github size={20} />;
-      case 'LinkedIn':
-        return <Linkedin size={20} />;
-      case 'Instagram':
-        return <Instagram size={20} />;
-      default:
-        return null;
-    }
-  };
+  switch (name) {
+    case "GitHub":
+      return <Github size={20} />;
+    case "LinkedIn":
+      return <Linkedin size={20} />;
+    case "LeetCode":
+      return <img src={LeetCode} alt="LeetCode" className="w-5 h-5" />;
+    default:
+      return null;
+  }
+};
+
 
   return (
     <section id="about-me" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">

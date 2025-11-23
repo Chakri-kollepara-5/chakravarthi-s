@@ -1,16 +1,23 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Instagram, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, ExternalLink } from 'lucide-react';
 import { socialLinks, certificateLinks } from '../data/links';
+import LeetCode from "../assets/leetcode.svg";
 
 const Footer = () => {
   const getSocialIcon = (name) => {
     switch (name) {
-      case 'GitHub':
+      case "GitHub":
         return <Github size={20} />;
-      case 'LinkedIn':
+      case "LinkedIn":
         return <Linkedin size={20} />;
-      case 'leetcode':
-        return <leetcode size={20} />;
+      case "LeetCode":
+        return (
+          <img
+            src={LeetCode}
+            alt="LeetCode"
+            className="w-5 h-5 object-contain"
+          />
+        );
       default:
         return null;
     }
@@ -20,6 +27,7 @@ const Footer = () => {
     <footer className="relative bg-gradient-to-b from-black to-purple-950/30 border-t border-white/10 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
+          {/* SOCIAL ICONS */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -49,10 +57,10 @@ const Footer = () => {
             </div>
           </motion.div>
 
+          {/* QUICK LINKS */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="space-y-4"
           >
@@ -65,9 +73,7 @@ const Footer = () => {
                       const element = document.getElementById(
                         item.toLowerCase().replace(' ', '-')
                       );
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                      }
+                      if (element) element.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="text-white/70 hover:text-purple-400 transition-colors"
                   >
@@ -78,10 +84,10 @@ const Footer = () => {
             </ul>
           </motion.div>
 
+          {/* CERTIFICATES */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="space-y-4"
           >
@@ -107,10 +113,10 @@ const Footer = () => {
           </motion.div>
         </div>
 
+        {/* FOOTER BOTTOM */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
           transition={{ delay: 0.3 }}
           className="pt-8 border-t border-white/10 text-center"
         >
