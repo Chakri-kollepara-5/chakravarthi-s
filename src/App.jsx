@@ -8,6 +8,11 @@ import Projects from './components/Projects';
 import CertificatesSection from './components/CertificatesSection';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
+import ProjectDemoVideo from "./components/ProjectDemoVideo.jsx.jsx";
+
+
+
+
 
 function App() {
   return (
@@ -18,6 +23,13 @@ function App() {
       <Skills />
       <Projects />
       <CertificatesSection/>
+
+<ProjectDemoVideo
+  title="SIH 2025 – ResQConnect: Disaster Management Solution"
+  description="This is the official demo for our Smart India Hackathon problem statement focusing on Disaster Management. Our solution, ResQConnect, streamlines rescue operations, resource allocation, and real-time emergency response."
+  video="/videos/resqconnect-demo.mp4"
+/>
+
       <ContactForm />
       <Footer />
     </div>
