@@ -2,14 +2,20 @@ import { motion } from "framer-motion";
 import { Download, Github, Linkedin } from "lucide-react";
 import { socialLinks, resumeUrl } from "../data/links";
 import LeetCodeIcon from "../icons/LeetCodeIcon";
+import Lottie from "lottie-react";
+import handAnim from "../animations/hand-place.json";
+
+
+import "./lines.css";
+import "./imageGlow.css";
 
 const Hero = () => {
   const handleResumeDownload = () => {
-    const link = document.createElement("a");
-    link.href = resumeUrl;
-    link.target = "_blank";
-    link.download = "Kollepara_Chakravarthi_Resume.pdf";
-    link.click();
+    const a = document.createElement("a");
+    a.href = resumeUrl;
+    a.target = "_blank";
+    a.download = "Kollepara_K_V_Sri_Chakravarthi_Resume.pdf";
+    a.click();
   };
 
   const getSocialIcon = (name) => {
@@ -26,98 +32,90 @@ const Hero = () => {
   };
 
   return (
-    <section id="about-me" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-black">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-30" />
+    <section
+      id="about-me"
+      className="min-h-screen flex items-center justify-center relative pt-20 text-white"
+    >
+      {/* LINES BACKGROUND */}
+      <div className="lines">
+        {[...Array(10)].map((_, i) => (
+          <div key={i} className="line"></div>
+        ))}
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-20">
+
+        {/* LEFT TEXT SECTION */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           className="space-y-6"
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-5xl md:text-6xl font-bold leading-tight"
-          >
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+            Hi, I’m{" "}
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Hi, I'm Kollepara Venkata Sri Chakravarthi
+              Kollepara Venkata Sri Chakravarthi
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl text-white/80 leading-relaxed"
-          >
-            A passionate Full Stack Developer and Machine Learning enthusiast, pursuing a B.Tech at Anil Neerukonda Institute of Technology and Science. I thrive on building innovative, responsive web applications.
-          </motion.p>
+          <p className="text-xl text-white/70">
+            Full-Stack Developer • Machine Learning • UI Enthusiast
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap gap-4"
-          >
+          <div className="flex gap-4 flex-wrap">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleResumeDownload}
-              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold flex items-center space-x-2 shadow-lg hover:shadow-purple-500/50 transition-shadow"
+              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold flex items-center gap-2 shadow-lg"
             >
               <Download size={20} />
-              <span>Download Resume</span>
+              Download Resume
             </motion.button>
 
-            <div className="flex space-x-3">
-              {socialLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-                >
-                  {getSocialIcon(link.name)}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+            {socialLinks.map((link) => (
+              <motion.a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                whileHover={{ scale: 1.1 }}
+                className="w-12 h-12 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center hover:bg-white/20"
+              >
+                {getSocialIcon(link.name)}
+              </motion.a>
+            ))}
+          </div>
         </motion.div>
 
+        {/* RIGHT IMAGE SECTION */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative"
+          transition={{ duration: 0.7 }}
+          className="relative flex justify-center"
         >
-          <div className="relative w-full max-w-md mx-auto">
-            <motion.div
-              animate={{
-                scale: [1, 1.05, 1],
-                rotate: [0, 5, -5, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                repeatType: 'reverse',
-              }}
-              className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-40"
-            />
+          <div className="glow-wrap">
+
+            {/* HAND ANIMATION */}
+          <Lottie
+  animationData={handAnim}
+  loop={false}
+  autoplay={true}
+  className="hand-anim"
+/>
+
+
+            {/* IMAGE */}
             <img
               src="https://res.cloudinary.com/dhsfdcsbi/image/upload/v1763888147/chakri_jgazdv.png"
               alt="Profile"
-              className="relative w-full rounded-full border-4 border-white/20 shadow-2xl"
+              className="profile-img"
             />
+
           </div>
         </motion.div>
+
       </div>
     </section>
   );

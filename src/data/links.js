@@ -45,4 +45,4 @@ export const certificateLinks = [
   },
 ];
 
-export const resumeUrl = 'https://drive.google.com/file/d/1Y0B8kq4plpwncv4y-XFvVnbV1-xLjwOP/view?usp=drivesdk';
+export const resumeUrl = 'https://drive.google.com/file/d/1TvmVBJvZRCDD2Avrxv1zq_3Mdes3vkRK/view';

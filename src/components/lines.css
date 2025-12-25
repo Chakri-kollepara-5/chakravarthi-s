@@ -1,0 +1,47 @@
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 90vw;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.line {
+  width: 1px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.line::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  width: 100%;
+  height: 22vh;
+  border-radius: 999px;
+  animation: drop 6s linear infinite;
+  opacity: 0.9;
+  filter: blur(.5px);
+}
+
+/* colors + delays */
+.line:nth-child(1)::after { background: linear-gradient(#ff4500,transparent); animation-delay:.3s;}
+.line:nth-child(2)::after { background: linear-gradient(#32cd32,transparent); animation-delay:.8s;}
+.line:nth-child(3)::after { background: linear-gradient(#1e90ff,transparent); animation-delay:1.2s;}
+.line:nth-child(4)::after { background: linear-gradient(#ffd700,transparent); animation-delay:1.6s;}
+.line:nth-child(5)::after { background: linear-gradient(#8a2be2,transparent); animation-delay:2s;}
+.line:nth-child(6)::after { background: linear-gradient(#20b2aa,transparent); animation-delay:2.4s;}
+.line:nth-child(7)::after { background: linear-gradient(#dc143c,transparent); animation-delay:2.8s;}
+.line:nth-child(8)::after { background: linear-gradient(#00fa9a,transparent); animation-delay:3.2s;}
+.line:nth-child(9)::after { background: linear-gradient(#ff1493,transparent); animation-delay:3.6s;}
+.line:nth-child(10)::after{ background: linear-gradient(#00bfff,transparent); animation-delay:4s;}
+
+@keyframes drop {
+  0%   { top:-30%; opacity:.2;}
+  40%  { opacity:1;}
+  100% { top:120%; opacity:0;}
+}

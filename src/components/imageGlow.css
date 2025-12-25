@@ -1,0 +1,168 @@
+.glow-wrap {
+  position: relative;
+  display: inline-block;
+  width: 260px;
+  height: 260px;
+  border-radius: 26px;
+  isolation: isolate;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+
+  /* IMPORTANT: allow the hand to show */
+  overflow: visible;
+}
+
+/* ===== AURAS / BACKGLOW ===== */
+
+.glow-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -12%;   /* was -40% */
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,120,80,.18), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(255,0,90,.14), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255,180,60,.16), transparent 45%),
+    linear-gradient(140deg, rgba(12,12,16,1), rgba(8,8,12,1));
+  
+  filter: blur(6px);  /* smaller blur to match smaller area */
+  z-index: 1;
+  animation: bgFlow 28s ease-in-out infinite;
+  opacity: .6;
+}
+
+
+.profile-img {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.75),
+    0 0 0 1px rgba(255,255,255,.06) inset;
+  animation: floatImg 7s ease-in-out infinite;
+}
+
+/* ===== HAND ANIMATION ===== */
+
+.hand-anim {
+  position: absolute;
+  left: -60px;
+  top: -30px;
+  width: 320px;
+  height: 320px;
+  z-index: 50;        /* FORCE above image */
+  pointer-events: none;
+}
+
+/* ===== MOTION ===== */
+
+@keyframes bgFlow {
+  0%   { transform: translate(0,0) scale(1.3); }
+  50%  { transform: translate(-25px,15px) scale(1.35); }
+  100% { transform: translate(0,0) scale(1.3); }
+}
+
+@keyframes floatImg {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-10px); }
+}
+
+.hand-anim * {
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  fill: white !important;
+  stroke: white !important;
+}
+/* ⭐ BIG PAGE-LEVEL HAND MOTION */
+/* BIG HAND — PAGE LEVEL ANIMATION */
+.hand-anim {
+  position: fixed;
+  bottom: -260px;           /* start off screen */
+  left: -320px;             /* start off screen */
+  width: 720px;
+  height: 720px;
+  z-index: 9999;
+  pointer-events: none;
+  filter: drop-shadow(0 25px 45px rgba(0,0,0,.45));
+  animation: handToPhoto 2.4s cubic-bezier(.16,.84,.44,1) forwards;
+}
+
+/* TRAVEL ACROSS THE SCREEN */
+@keyframes handToPhoto {
+  0% {
+    transform: translate(0,0) rotate(-18deg) scale(1);
+    opacity: .95;
+  }
+
+  50% {
+    transform: translate(40vw, -20vh) rotate(-6deg) scale(1.05);
+  }
+
+  100% {
+    transform: translate(48vw, -28vh) rotate(-2deg) scale(1.08);
+    opacity: 1;
+  }
+}
+
+
+/* ⭐ ANIMATION PATH TO TOP-RIGHT */
+@keyframes handToPhoto {
+  0% {
+    transform: translate(0,0) rotate(-18deg) scale(1);
+    opacity: .95;
+  }
+
+  /* higher mid-path */
+  70% {
+    transform: translate(18vw, -22vh) rotate(-6deg) scale(1.06);
+  }
+
+  /* higher final stop */
+  100% {
+    transform: translate(10vw, -30vh) rotate(-2deg) scale(1.08);
+  }
+}
+
+
+/* ===========================
+   📱 MOBILE — HAND COVERS PHOTO
+   ===========================*/
+@media (max-width: 768px) {
+
+  .hand-anim {
+    position: fixed;
+    width: 480px;
+    height: 480px;
+
+    bottom: -280px;      /* start fully hidden bottom-left */
+    left: -340px;
+
+    pointer-events: none;
+    z-index: 9999;
+
+    animation: handToPhotoMobile 2.4s cubic-bezier(.16,.84,.44,1) forwards;
+  }
+
+  @keyframes handToPhotoMobile {
+
+    /* start hidden */
+    0% {
+      transform: translate(0,0) rotate(-18deg) scale(1);
+      opacity: .95;
+    }
+
+    /* smooth rising arc */
+    55% {
+      transform: translate(30vw, -24vh) rotate(-6deg) scale(1.06);
+    }
+
+    /* 🎯 FINAL — hand fully covers your image */
+    100% {
+      transform: translate(42vw, -32vh) rotate(-2deg) scale(1.08);
+      opacity: 1;
+    }
+  }
+}
