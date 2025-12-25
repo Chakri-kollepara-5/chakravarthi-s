@@ -37,7 +37,7 @@ const Footer = () => {
               Full Stack Developer & ML Enthusiast crafting innovative digital experiences.
             </p>
 
-            <div className="flex space-x-3">
+            <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
               {socialLinks.map((link) => (
                 <motion.a
                   key={link.name}
