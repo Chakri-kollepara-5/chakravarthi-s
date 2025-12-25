@@ -73,18 +73,19 @@ const Hero = () => {
               <Download size={20} />
               Download Resume
             </motion.button>
+{socialLinks.map((link) => (
+  <motion.a
+    key={link.name}
+    href={link.url}
+    target="_blank"
+    whileHover={{ scale: 1.1 }}
+    className={`w-12 h-12 min-w-12 min-h-12 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center hover:bg-white/20
+      ${link.name === "LeetCode" ? "hidden md:flex" : ""}`}
+  >
+    {getSocialIcon(link.name)}
+  </motion.a>
+))}
 
-            {socialLinks.map((link) => (
-              <motion.a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                whileHover={{ scale: 1.1 }}
-                className="w-12 h-12 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center hover:bg-white/20"
-              >
-                {getSocialIcon(link.name)}
-              </motion.a>
-            ))}
           </div>
         </motion.div>
 
