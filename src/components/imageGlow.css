@@ -156,12 +156,12 @@
 
     /* smooth rising arc */
     55% {
-      transform: translate(30vw, -24vh) rotate(-6deg) scale(1.06);
+      transform: translate(80vw, -24vh) rotate(-6deg) scale(1.06);
     }
 
     /* 🎯 FINAL — hand fully covers your image */
     100% {
-      transform: translate(42vw, -32vh) rotate(-2deg) scale(1.08);
+      transform: translate(48vw, -32vh) rotate(-2deg) scale(1.08);
       opacity: 1;
     }
   }

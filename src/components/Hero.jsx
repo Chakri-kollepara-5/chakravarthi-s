@@ -63,7 +63,7 @@ const Hero = () => {
             Full-Stack Developer • Machine Learning • UI Enthusiast
           </p>
 
-          <div className="flex gap-4 flex-wrap">
+          <div className="flex items-center gap-4 flex-wrap md:flex-nowrap">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
