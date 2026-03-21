@@ -1,0 +1,1 @@
+https://console.firebase.google.com/v1/r/project/folkvizag-b6830/firestore/indexes?create_composite=Ck5wcm9qZWN0cy9mb2xrdml6YWctYjY4MzAvZGF0YWJhc2VzLyhkZWZhdWx0KS9jb2xsZWN0aW9uR3JvdXBzL2V2ZW50cy9pbmRleGVzL18QARoLCgdncm91cElkEAEaDQoJY3JlYXRlZEF0EAI

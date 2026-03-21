@@ -1,17 +1,19 @@
 const express = require("express");
-const authMiddleware = require("../middlewares/authMiddleware");
-const {
-  getDashboardSummary,
-  getRecentFeeds,
-} = require("../controllers/dashboardController");
-
-console.log("🔥 dashboardRoutes LOADED");
-
 const router = express.Router();
 
-// router.get("/summary", authMiddleware, getDashboardSummary);
-router.get("/summary", getDashboardSummary);
+const {
+  createDonation,
+  listDonations,
+  claimDonation,
+} = require("../controllers/donationController");
 
-router.get("/recent-feeds", authMiddleware, getRecentFeeds);
+const authMiddleware = require("../middlewares/authMiddleware");
+
+// ✅ PUBLIC READ
+router.get("/", listDonations);
+
+// 🔒 PROTECTED WRITE
+router.post("/", authMiddleware, createDonation);
+router.patch("/:id/claim", authMiddleware, claimDonation);
 
 module.exports = router;

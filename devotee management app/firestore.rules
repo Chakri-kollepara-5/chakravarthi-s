@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    function getRole() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) 
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role 
+        : 'none';
+    }
+    function isMainAdmin() { return isSignedIn() && (getRole() == 'admin'); }
+    function isFolksHead() { return isSignedIn() && (getRole() == 'folks_head'); }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isMainAdmin() || (isFolksHead() && (resource == null || resource.data.assignedGroup == request.auth.uid));
+      allow create: if isOwner(userId) || isMainAdmin() || isFolksHead();
+      allow update: if isOwner(userId) || isMainAdmin() || isFolksHead();
+    }
+
+    match /sadhana_logs/{logId} {
+      // Allow read if accessing a non-existent doc, or owner, or admin/head
+      allow read: if isSignedIn() && (
+        resource == null || 
+        resource.data.userId == request.auth.uid || 
+        isMainAdmin() || 
+        (isFolksHead() && get(/databases/$(database)/documents/users/$(resource.data.userId)).data.assignedGroup == request.auth.uid)
+      );
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+    }
+
+    match /events/{eventId} {
+      allow read: if isSignedIn();
+      allow create: if isMainAdmin() || (isFolksHead() && request.resource.data.groupId == request.auth.uid);
+      allow update: if isMainAdmin() || (isFolksHead() && resource.data.groupId == request.auth.uid) || (isSignedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['attendingCount', 'declinedCount']));
+      allow delete: if isMainAdmin() || (isFolksHead() && resource.data.groupId == request.auth.uid);
+    }
+
+    match /registrations/{registrationId} {
+      allow read: if isSignedIn() && (
+        resource == null || 
+        resource.data.userId == request.auth.uid || 
+        isMainAdmin()
+      );
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isMainAdmin();
+      allow delete: if isMainAdmin();
+    }
+
+    match /attendance/{attendanceId} {
+      allow read: if isSignedIn();
+      allow create: if isMainAdmin() || isFolksHead();
+    }
+
+    match /accommodation_requests/{requestId} {
+      allow read: if isSignedIn() && (
+        resource == null || 
+        resource.data.userId == request.auth.uid || 
+        isMainAdmin() || 
+        (isFolksHead() && get(/databases/$(database)/documents/users/$(resource.data.userId)).data.assignedGroup == request.auth.uid)
+      );
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isMainAdmin() || isFolksHead(); 
+    }
+    
+    match /notifications/{notifId} {
+      allow read: if isSignedIn();
+      allow create: if isMainAdmin() || isFolksHead();
+      allow delete: if isMainAdmin();
+    }
+
+    match /payments/{paymentId} {
+      allow read: if isMainAdmin() || (isSignedIn() && (resource == null || resource.data.userId == request.auth.uid));
+      allow write: if false; 
+    }
+  }
+}
