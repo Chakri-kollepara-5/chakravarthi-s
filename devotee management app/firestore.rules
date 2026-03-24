@@ -1,6 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Utility functions
     function isSignedIn() { return request.auth != null; }
     function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
     function getRole() {
@@ -11,24 +12,25 @@ service cloud.firestore {
     function isMainAdmin() { return isSignedIn() && (getRole() == 'admin'); }
     function isFolksHead() { return isSignedIn() && (getRole() == 'folks_head'); }
 
+    // Users Collection
     match /users/{userId} {
       allow read: if isOwner(userId) || isMainAdmin() || (isFolksHead() && (resource == null || resource.data.assignedGroup == request.auth.uid));
-      allow create: if isOwner(userId) || isMainAdmin() || isFolksHead();
-      allow update: if isOwner(userId) || isMainAdmin() || isFolksHead();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) || isMainAdmin();
     }
 
+    // Sadhana Logs
     match /sadhana_logs/{logId} {
-      // Allow read if accessing a non-existent doc, or owner, or admin/head
       allow read: if isSignedIn() && (
         resource == null || 
         resource.data.userId == request.auth.uid || 
         isMainAdmin() || 
         (isFolksHead() && get(/databases/$(database)/documents/users/$(resource.data.userId)).data.assignedGroup == request.auth.uid)
       );
-      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
-      allow update: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow create, update: if isSignedIn() && request.resource.data.userId == request.auth.uid;
     }
 
+    // Events
     match /events/{eventId} {
       allow read: if isSignedIn();
       allow create: if isMainAdmin() || (isFolksHead() && request.resource.data.groupId == request.auth.uid);
@@ -36,22 +38,28 @@ service cloud.firestore {
       allow delete: if isMainAdmin() || (isFolksHead() && resource.data.groupId == request.auth.uid);
     }
 
+    // Registrations (Verification)
     match /registrations/{registrationId} {
-      allow read: if isSignedIn() && (
-        resource == null || 
-        resource.data.userId == request.auth.uid || 
-        isMainAdmin()
-      );
+      allow read: if isSignedIn() && (resource == null || resource.data.userId == request.auth.uid || isMainAdmin() || isFolksHead());
       allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
-      allow update: if isMainAdmin();
-      allow delete: if isMainAdmin();
+      allow update, delete: if isMainAdmin();
     }
 
+    // Attendance (Check-in)
     match /attendance/{attendanceId} {
-      allow read: if isSignedIn();
+      allow read: if isSignedIn() && (isMainAdmin() || isFolksHead() || resource.data.userId == request.auth.uid);
       allow create: if isMainAdmin() || isFolksHead();
+      allow update, delete: if isMainAdmin();
     }
 
+    // Prasadam Logs
+    match /prasadam_logs/{logId} {
+      allow read: if isSignedIn() && (isMainAdmin() || isFolksHead() || resource.data.userId == request.auth.uid);
+      allow create: if isMainAdmin() || isFolksHead();
+      allow update, delete: if isMainAdmin();
+    }
+
+    // Accommodations
     match /accommodation_requests/{requestId} {
       allow read: if isSignedIn() && (
         resource == null || 
@@ -60,18 +68,35 @@ service cloud.firestore {
         (isFolksHead() && get(/databases/$(database)/documents/users/$(resource.data.userId)).data.assignedGroup == request.auth.uid)
       );
       allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
-      allow update: if isMainAdmin() || isFolksHead(); 
+      allow update: if isMainAdmin(); 
     }
     
+    // Notifications
     match /notifications/{notifId} {
       allow read: if isSignedIn();
       allow create: if isMainAdmin() || isFolksHead();
       allow delete: if isMainAdmin();
     }
 
+    // Payments
     match /payments/{paymentId} {
       allow read: if isMainAdmin() || (isSignedIn() && (resource == null || resource.data.userId == request.auth.uid));
       allow write: if false; 
+    }
+
+    // --- SEVA SYSTEM RULES (NEW) ---
+    match /sevas/{sevaId} {
+      allow read: if isSignedIn();
+      allow create: if isMainAdmin() || isFolksHead();
+      allow update: if isMainAdmin() || isFolksHead() || isSignedIn(); // allow increment via transaction
+      allow delete: if isMainAdmin();
+    }
+
+    match /seva_registrations/{regId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn(); // users cancel their own; admin marks attendance
+      allow delete: if isMainAdmin();
     }
   }
 }
