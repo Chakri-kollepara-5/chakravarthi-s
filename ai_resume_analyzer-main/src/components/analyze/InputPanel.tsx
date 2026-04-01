@@ -1,4 +1,5 @@
 import React from 'react';
+import type { AnalysisResult, ATSMatchResult, LoadingStates } from '../../types';
 
 interface InputPanelProps {
   file: File | null;
@@ -13,9 +14,9 @@ interface InputPanelProps {
   onJobDescriptionChange: (jd: string) => void;
   onRunAnalysis: () => void;
   error: string | null;
-  loadingStates: any;
-  result: any;
-  atsResult: any;
+  loadingStates: LoadingStates;
+  result: AnalysisResult | null;
+  atsResult: ATSMatchResult | null;
 }
 
 export const InputPanel: React.FC<InputPanelProps> = ({
@@ -135,10 +136,10 @@ export const InputPanel: React.FC<InputPanelProps> = ({
               { key: 'sections', label: 'Sections', icon: '📝' },
               { key: 'fixes', label: 'Quick Fixes', icon: '⚡' },
             ].map(item => (
-              <div key={item.key} className={`progress-item ${loadingStates[item.key as keyof typeof loadingStates] ? 'loading' : (result || atsResult ? 'done' : '')}`}>
+              <div key={item.key} className={`progress-item ${loadingStates[item.key] ? 'loading' : (result || atsResult ? 'done' : '')}`}>
                 <span>{item.icon}</span>
                 <span>{item.label}</span>
-                {loadingStates[item.key as keyof typeof loadingStates] ? (
+                {loadingStates[item.key] ? (
                   <span className="animate-spin" style={{ fontSize: 10 }}>⟳</span>
                 ) : (
                   <span style={{ fontSize: 10, color: 'var(--accent)' }}>✓</span>

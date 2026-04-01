@@ -11,22 +11,13 @@ import { HistoryView } from './components/history/HistoryView'
 import { TipsView } from './components/tips/TipsView'
 import { useAuth } from './context/AuthContext'
 
+import { type AnalysisResult, type ATSMatchResult, type SkillGapResult, type HistoryEntry, type LoadingStates } from './types'
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`
 
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
 const BASE_URL = import.meta.env.VITE_OPENAI_BASE_URL
 const MODEL = import.meta.env.VITE_OPENAI_MODEL
-
-// ─── Interfaces ───
-interface AnalysisResult {
-  score: number; verdict: string; summary: string; grade: string;
-  categories: { impact: number; skills: number; structure: number; ats: number };
-  strengths: string[]; improvements: string[]; keywords_found: string[]; keywords_missing: string[];
-}
-interface ATSMatchResult { ats_match_score: number; missing_keywords: string[]; matched_keywords: string[]; }
-interface SkillGapResult { required_skills: string[]; missing_skills: string[]; suggested_skills_to_learn: string[]; }
-interface SectionFeedbackResult { education_feedback: string; experience_feedback: string; projects_feedback: string; }
-interface HistoryEntry { id: number; role: string; result: AnalysisResult; date: string; }
 
 export default function App() {
   const { isLoggedIn, trialUsed, incrementAnalysis } = useAuth();
@@ -49,9 +40,8 @@ export default function App() {
   const [atsResult, setAtsResult] = useState<ATSMatchResult | null>(null)
   const [skillGap, setSkillGap] = useState<SkillGapResult | null>(null)
   const [resumeSummary, setResumeSummary] = useState<string | null>(null)
-  const [sectionFeedback, setSectionFeedback] = useState<SectionFeedbackResult | null>(null)
 
-  const [loadingStates, setLoadingStates] = useState({
+  const [loadingStates, setLoadingStates] = useState<LoadingStates>({
     main: false, ats: false, skills: false, summary: false, sections: false, fixes: false,
   })
 
@@ -93,9 +83,10 @@ export default function App() {
       // Extract the first JSON object found in the response for maximum robustness
       const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
       return jsonMatch ? jsonMatch[0] : rawContent;
-    } catch (err: any) {
-      if (err.message.includes('AUTH_ERROR')) throw err;
-      throw new Error(`Connection Error: ${err.message}`);
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      if (errorMsg.includes('AUTH_ERROR')) throw err;
+      throw new Error(`Connection Error: ${errorMsg}`);
     }
   }
 
@@ -118,8 +109,9 @@ export default function App() {
       
       const data = await resp.json();
       return data.choices[0].message.content.trim();
-    } catch (err: any) {
-      throw err;
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      throw new Error(`AI Error: ${errorMsg}`);
     }
   }
 
@@ -131,8 +123,9 @@ export default function App() {
       const pdf = await pdfjsLib.getDocument({ data: buf }).promise
       let text = ''
       for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i); const tc = await page.getTextContent();
-        text += tc.items.map((item: any) => item.str).join(' ') + '\n'
+        const page = await pdf.getPage(i); 
+        const tc = await page.getTextContent();
+        text += tc.items.map((item: unknown) => (item as { str: string }).str).join(' ') + '\n';
       }
       setResumeText(text.trim())
     } catch { setError('Failed to extract text from PDF. Try copy-pasting your resume below.'); }
@@ -171,8 +164,9 @@ export default function App() {
         const content = await callAI(sys, contextStr);
         const parsed = JSON.parse(content); setResult(parsed);
         setHistory(prev => [{ id: Date.now(), role, result: parsed, date: new Date().toISOString() }, ...prev]);
-      } catch (err: any) { 
-        setError(err.message.includes('AUTH_ERROR') ? err.message.replace('AUTH_ERROR: ', '') : `Analysis Error: ${err.message}`); 
+      } catch (err: unknown) { 
+        const errorMsg = err instanceof Error ? err.message : String(err);
+        setError(errorMsg.includes('AUTH_ERROR') ? errorMsg.replace('AUTH_ERROR: ', '') : `Analysis Error: ${errorMsg}`); 
       } finally {
         setLoading('main', false);
       }
@@ -180,24 +174,22 @@ export default function App() {
 
     promises.push((async () => {
       setLoading('ats', true);
-      setLoading('ats', true);
       try {
         const sys = `Return ONLY valid JSON. Schema: { "ats_match_score": number, "missing_keywords": ["string"], "matched_keywords": ["string"] }`;
         const content = await callAI(sys, contextStr);
         setAtsResult(JSON.parse(content));
-      } catch {} finally {
+      } catch { /* empty */ } finally {
         setLoading('ats', false);
       }
     })());
 
     promises.push((async () => {
       setLoading('skills', true);
-      setLoading('skills', true);
       try {
         const sys = `Identify skill gaps for role. Return ONLY JSON. Schema: { "required_skills": ["string"], "missing_skills": ["string"], "suggested_skills_to_learn": ["string"] }`;
         const content = await callAI(sys, contextStr);
         setSkillGap(JSON.parse(content));
-      } catch {} finally {
+      } catch { /* empty */ } finally {
         setLoading('skills', false);
       }
     })());
@@ -208,7 +200,7 @@ export default function App() {
         const sys = `Return ONLY JSON. Schema: { "summary": "string" }`;
         const content = await callAI(sys, contextStr);
         setResumeSummary(JSON.parse(content).summary);
-      } catch {} finally {
+      } catch { /* empty */ } finally {
         setLoading('summary', false);
       }
     })());
@@ -334,13 +326,13 @@ export default function App() {
             </motion.div>
           )}
 
-          {view === 'history' && <HistoryView history={history} onSelect={(e) => { setResult(e.result); setView('analyse') }} onClear={() => setHistory([])} />}
+          {view === 'history' && <HistoryView history={history} onSelect={(e: HistoryEntry) => { setResult(e.result); setView('analyse') }} onClear={() => setHistory([])} />}
           {view === 'tips' && <TipsView />}
           {view === 'tools' && (
             <div className="fade-in-up">
               <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, marginBottom: 8 }}>Career Suite</h2>
               <p style={{ color: 'var(--text2)', marginBottom: 32 }}>Leverage advanced AI to craft high-impact career assets.</p>
-              <CareerTools resumeText={resumeText} targetRole={targetRole} callAI={callAI} callAIPlain={callAIPlain} />
+              <CareerTools resumeText={resumeText} targetRole={targetRole} callAIPlain={callAIPlain} />
             </div>
           )}
         </AnimatePresence>

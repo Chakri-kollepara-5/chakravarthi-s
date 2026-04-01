@@ -1,12 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-interface HistoryEntry {
-  id: number;
-  role: string;
-  result: any; // Using any for compatibility with expanding result objects
-  date: string;
-}
+import type { HistoryEntry } from '../../types';
 
 interface HistoryViewProps {
   history: HistoryEntry[];

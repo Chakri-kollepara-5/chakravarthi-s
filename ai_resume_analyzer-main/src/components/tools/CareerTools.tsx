@@ -4,14 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface CareerToolsProps {
   resumeText: string;
   targetRole: string;
-  callAI: (systemPrompt: string, userContent: string) => Promise<string>;
   callAIPlain: (systemPrompt: string, userContent: string) => Promise<string>;
 }
 
 export const CareerTools: React.FC<CareerToolsProps> = ({ 
   resumeText, 
   targetRole, 
-  callAI, 
   callAIPlain 
 }) => {
   const [activeTool, setActiveTool] = useState<'interview' | 'coverletter' | 'linkedin' | null>(null);
@@ -40,22 +38,23 @@ export const CareerTools: React.FC<CareerToolsProps> = ({
       desc: 'Optimize your profile with a killer headline and "About" section.',
       prompt: 'Generate a standout LinkedIn Headline and a 2-paragraph "About" section based on this resume. Return ONLY the headline and about section. Format: Headline: ... About: ...'
     }
-  ];
+  ] as const;
 
-  const handleToolAction = async (toolId: string) => {
+  const handleToolAction = async (toolId: 'interview' | 'coverletter' | 'linkedin') => {
     if (!resumeText) return;
     const tool = tools.find(t => t.id === toolId);
     if (!tool) return;
 
-    setActiveTool(toolId as any);
+    setActiveTool(toolId);
     setIsLoading(true);
     setResult(null);
 
     try {
       const content = await callAIPlain(tool.prompt, `Target Role: ${targetRole}\n\nResume:\n${resumeText}`);
       setResult(content);
-    } catch (err: any) {
-      setResult(`Error: ${err.message}`);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setResult(`Error: ${msg}`);
     } finally {
       setIsLoading(false);
     }
