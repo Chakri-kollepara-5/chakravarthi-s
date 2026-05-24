@@ -1,0 +1,548 @@
+/* ============================================================
+   AURA 2.0 — Scoped styles (does not override any existing CSS)
+   ============================================================ */
+
+/* ---------- Section wrapper ---------- */
+.aura-section {
+  position: relative;
+  padding: 100px 0 80px;
+  background: linear-gradient(180deg, #000 0%, #050510 40%, #000 100%);
+  overflow: hidden;
+}
+
+/* ambient glow blobs */
+.aura-section::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(99,102,241,.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.aura-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -200px;
+  width: 600px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(168,85,247,.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Section title ---------- */
+.aura-title-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #818cf8;
+  background: rgba(99,102,241,.12);
+  border: 1px solid rgba(99,102,241,.3);
+  border-radius: 999px;
+  padding: 4px 16px;
+  margin-bottom: 16px;
+}
+
+/* ---------- Featured card ---------- */
+.aura-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(15,15,35,.95) 0%, rgba(10,10,25,.98) 100%);
+  border: 1px solid rgba(99,102,241,.25);
+  box-shadow: 0 0 0 1px rgba(99,102,241,.1), 0 40px 100px rgba(0,0,0,.6);
+  padding: 48px;
+}
+
+.aura-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99,102,241,.06) 0%, rgba(168,85,247,.04) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* card glow top-left corner accent */
+.aura-card-corner {
+  position: absolute;
+  top: 0; left: 0;
+  width: 300px; height: 2px;
+  background: linear-gradient(90deg, #6366f1, transparent);
+}
+.aura-card-corner-v {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 200px;
+  background: linear-gradient(180deg, #6366f1, transparent);
+}
+
+/* AURA logo badge */
+.aura-logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.aura-logo-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(99,102,241,.4);
+  box-shadow: 0 0 20px rgba(99,102,241,.3);
+}
+.aura-version-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #a5b4fc;
+  background: rgba(99,102,241,.15);
+  border: 1px solid rgba(99,102,241,.3);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* card title */
+.aura-card-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 50%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+
+.aura-card-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 620px;
+}
+
+/* ---------- Action buttons ---------- */
+.aura-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.aura-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .25s ease;
+  text-decoration: none;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 20px rgba(99,102,241,.35);
+}
+.aura-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(99,102,241,.5);
+}
+
+.aura-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .25s ease;
+  text-decoration: none;
+  background: transparent;
+  color: rgba(255,255,255,.8);
+  border: 1px solid rgba(255,255,255,.15);
+}
+.aura-btn-ghost:hover {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(99,102,241,.5);
+  color: #a5b4fc;
+  transform: translateY(-2px);
+}
+
+/* ---------- Stat bar ---------- */
+.aura-stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding-top: 32px;
+}
+
+.aura-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(99,102,241,.1);
+  border: 1px solid rgba(99,102,241,.2);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c7d2fe;
+  transition: all .2s;
+}
+.aura-stat-pill:hover {
+  background: rgba(99,102,241,.2);
+  border-color: rgba(99,102,241,.45);
+  transform: translateY(-1px);
+}
+.aura-stat-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #818cf8;
+  flex-shrink: 0;
+}
+.aura-stat-pill.highlight {
+  background: rgba(99,102,241,.2);
+  border-color: #6366f1;
+  color: #e0e7ff;
+}
+
+/* ---------- Sub-section headings ---------- */
+.aura-sub-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e0e7ff;
+  margin-bottom: 8px;
+}
+.aura-sub-desc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 28px;
+}
+
+/* ---------- Architecture pipeline ---------- */
+.aura-pipeline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  overflow-x: auto;
+  padding: 28px 32px;
+  background: rgba(8,8,20,.7);
+  border: 1px solid rgba(99,102,241,.18);
+  border-radius: 20px;
+  scrollbar-width: none;
+}
+.aura-pipeline::-webkit-scrollbar { display: none; }
+
+.aura-pipe-step {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.aura-pipe-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  transition: all .25s;
+  cursor: default;
+}
+.aura-pipe-box:hover {
+  transform: translateY(-3px);
+}
+
+.aura-pipe-box.source  { background: rgba(244,114,182,.15); border:1px solid rgba(244,114,182,.35); color: #f9a8d4; }
+.aura-pipe-box.lexer   { background: rgba(251,191,36,.12);  border:1px solid rgba(251,191,36,.3);  color: #fde68a; }
+.aura-pipe-box.token   { background: rgba(52,211,153,.1);   border:1px solid rgba(52,211,153,.25); color: #6ee7b7; }
+.aura-pipe-box.parser  { background: rgba(99,102,241,.15);  border:1px solid rgba(99,102,241,.35); color: #a5b4fc; }
+.aura-pipe-box.ast     { background: rgba(168,85,247,.15);  border:1px solid rgba(168,85,247,.35); color: #d8b4fe; }
+.aura-pipe-box.sem     { background: rgba(239,68,68,.12);   border:1px solid rgba(239,68,68,.3);   color: #fca5a5; }
+.aura-pipe-box.interp  { background: rgba(59,130,246,.15);  border:1px solid rgba(59,130,246,.35); color: #93c5fd; }
+.aura-pipe-box.runtime { background: rgba(16,185,129,.12);  border:1px solid rgba(16,185,129,.3);  color: #6ee7b7; }
+.aura-pipe-box.output  { background: rgba(245,158,11,.15);  border:1px solid rgba(245,158,11,.35); color: #fcd34d; }
+
+.aura-pipe-label {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,.3);
+  margin-top: 4px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.aura-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  color: rgba(99,102,241,.5);
+  font-size: 1.1rem;
+}
+
+/* ---------- Feature grid ---------- */
+.aura-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.aura-feat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 18px;
+  background: rgba(10,10,25,.8);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  transition: all .3s ease;
+  overflow: hidden;
+  cursor: default;
+}
+.aura-feat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99,102,241,.1), rgba(168,85,247,.06));
+  opacity: 0;
+  transition: opacity .3s;
+}
+.aura-feat-card:hover {
+  border-color: rgba(99,102,241,.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 40px rgba(99,102,241,.15);
+}
+.aura-feat-card:hover::before { opacity: 1; }
+
+.aura-feat-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.aura-feat-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.85);
+  position: relative;
+  z-index: 1;
+}
+.aura-feat-desc {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,.35);
+  position: relative;
+  z-index: 1;
+  line-height: 1.45;
+}
+
+/* ---------- Code demo ---------- */
+.aura-code-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.aura-code-tab {
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  color: rgba(255,255,255,.4);
+  cursor: pointer;
+  transition: all .2s;
+}
+.aura-code-tab.active {
+  background: rgba(99,102,241,.15);
+  border-color: rgba(99,102,241,.25);
+  color: #a5b4fc;
+}
+.aura-code-tab:hover:not(.active) {
+  color: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.04);
+}
+
+.aura-code-window {
+  background: rgba(6,6,18,.95);
+  border: 1px solid rgba(99,102,241,.2);
+  border-radius: 0 16px 16px 16px;
+  overflow: hidden;
+}
+
+.aura-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(99,102,241,.07);
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.aura-code-dots {
+  display: flex;
+  gap: 7px;
+}
+.aura-code-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.aura-code-filename {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,.3);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+.aura-code-copy {
+  font-size: 0.72rem;
+  color: rgba(99,102,241,.7);
+  background: rgba(99,102,241,.1);
+  border: 1px solid rgba(99,102,241,.2);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all .2s;
+  font-weight: 600;
+}
+.aura-code-copy:hover {
+  background: rgba(99,102,241,.25);
+  color: #a5b4fc;
+}
+
+.aura-code-body {
+  padding: 24px;
+  overflow-x: auto;
+}
+.aura-code-body pre {
+  margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  color: #e2e8f0;
+  white-space: pre;
+}
+
+/* Syntax highlight colors */
+.tok-kw   { color: #c4b5fd; }  /* keywords */
+.tok-fn   { color: #93c5fd; }  /* function names */
+.tok-str  { color: #86efac; }  /* strings */
+.tok-num  { color: #fde68a; }  /* numbers */
+.tok-cmt  { color: rgba(255,255,255,.28); font-style: italic; }
+.tok-op   { color: #f9a8d4; }  /* operators */
+.tok-type { color: #6ee7b7; }  /* types/struct */
+.tok-punc { color: rgba(255,255,255,.5); }
+
+/* ---------- Engineering challenges ---------- */
+.aura-challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.aura-challenge-card {
+  position: relative;
+  padding: 22px 20px;
+  background: rgba(8,8,22,.9);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  transition: all .3s;
+  overflow: hidden;
+}
+.aura-challenge-card::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  border-radius: 3px 0 0 3px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.aura-challenge-card:hover {
+  border-color: rgba(99,102,241,.3);
+  transform: translateX(4px);
+  box-shadow: 0 8px 30px rgba(99,102,241,.1);
+}
+.aura-challenge-card:hover::after { opacity: 1; }
+
+.aura-challenge-icon {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+.aura-challenge-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #e0e7ff;
+  margin-bottom: 5px;
+}
+.aura-challenge-desc {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,.38);
+  line-height: 1.5;
+}
+
+/* ---------- Build note ---------- */
+.aura-build-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px;
+  background: rgba(8,8,22,.8);
+  border: 1px solid rgba(99,102,241,.18);
+  border-radius: 18px;
+  border-left: 3px solid #6366f1;
+}
+.aura-build-note-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.aura-build-note-text {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.7;
+}
+.aura-build-note-text strong {
+  color: rgba(255,255,255,.85);
+}
+.aura-build-note-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #818cf8;
+  text-decoration: none;
+  transition: color .2s;
+}
+.aura-build-note-link:hover { color: #a5b4fc; text-decoration: underline; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .aura-card { padding: 28px 20px; }
+  .aura-pipeline { padding: 20px 16px; }
+  .aura-pipe-box { padding: 8px 12px; font-size: 0.72rem; }
+  .aura-feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .aura-challenges-grid { grid-template-columns: 1fr; }
+}
