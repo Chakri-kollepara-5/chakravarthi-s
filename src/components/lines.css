@@ -1,0 +1,47 @@
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 90vw;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.line {
+  width: 1px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.line::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  width: 100%;
+  height: 22vh;
+  border-radius: 999px;
+  animation: drop 6s linear infinite;
+  opacity: 0.9;
+  filter: blur(.5px);
+}
+
+/* warm palette — ambers, golds, terracotta, burnt sienna */
+.line:nth-child(1)::after { background: linear-gradient(#D4A76A,transparent); animation-delay:.3s;}
+.line:nth-child(2)::after { background: linear-gradient(#C08B3E,transparent); animation-delay:.8s;}
+.line:nth-child(3)::after { background: linear-gradient(#9B6B1A,transparent); animation-delay:1.2s;}
+.line:nth-child(4)::after { background: linear-gradient(#F7C97E,transparent); animation-delay:1.6s;}
+.line:nth-child(5)::after { background: linear-gradient(#A0522D,transparent); animation-delay:2s;}
+.line:nth-child(6)::after { background: linear-gradient(#D4A76A,transparent); animation-delay:2.4s;}
+.line:nth-child(7)::after { background: linear-gradient(#C08B3E,transparent); animation-delay:2.8s;}
+.line:nth-child(8)::after { background: linear-gradient(#7A5316,transparent); animation-delay:3.2s;}
+.line:nth-child(9)::after { background: linear-gradient(#F7C97E,transparent); animation-delay:3.6s;}
+.line:nth-child(10)::after{ background: linear-gradient(#9B6B1A,transparent); animation-delay:4s;}
+
+@keyframes drop {
+  0%   { top:-30%; opacity:.2;}
+  40%  { opacity:1;}
+  100% { top:120%; opacity:0;}
+}

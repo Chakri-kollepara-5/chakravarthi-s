@@ -31,51 +31,51 @@ const PIPELINE = [
 ];
 
 const FEATURES = [
-  { icon: "⚙️", name: "Compiler", desc: "Multi-phase compilation pipeline" },
-  { icon: "🔄", name: "Interpreter", desc: "Tree-walk runtime evaluator" },
-  { icon: "💻", name: "REPL", desc: "Interactive read-eval-print loop" },
-  { icon: "🎨", name: "Formatter", desc: "Auto-format source with style rules" },
-  { icon: "🔍", name: "Explain Mode", desc: "Step-by-step execution trace" },
-  { icon: "🧠", name: "Semantic Engine", desc: "Type & scope resolution layer" },
-  { icon: "📦", name: "Object Methods", desc: "First-class object method dispatch" },
-  { icon: "📁", name: "File I/O", desc: "Built-in read/write file operations" },
-  { icon: "⚡", name: "Concurrency Runtime", desc: "Thread-isolated task execution" },
-  { icon: "🧩", name: "VS Code Extension", desc: "Syntax highlighting & snippets" },
+  { icon: "◆", name: "Compiler", desc: "Multi-phase compilation pipeline" },
+  { icon: "◆", name: "Interpreter", desc: "Tree-walk runtime evaluator" },
+  { icon: "◆", name: "REPL", desc: "Interactive read-eval-print loop" },
+  { icon: "◆", name: "Formatter", desc: "Auto-format source with style rules" },
+  { icon: "◆", name: "Explain Mode", desc: "Step-by-step execution trace" },
+  { icon: "◆", name: "Semantic Engine", desc: "Type & scope resolution layer" },
+  { icon: "◆", name: "Object Methods", desc: "First-class object method dispatch" },
+  { icon: "◆", name: "File I/O", desc: "Built-in read/write file operations" },
+  { icon: "◆", name: "Concurrency Runtime", desc: "Thread-isolated task execution" },
+  { icon: "◆", name: "VS Code Extension", desc: "Syntax highlighting & snippets" },
 ];
 
 const CHALLENGES = [
   {
-    icon: "🔁",
+    icon: "❖",
     title: "Recursive Descent + Pratt Parser",
     desc: "Built a hand-rolled Pratt parser supporting operator precedence, associativity, and prefix/infix expressions.",
   },
   {
-    icon: "🌲",
+    icon: "❖",
     title: "AST Immutability",
     desc: "Nodes are structurally frozen post-parse, preventing mutation bugs across semantic passes.",
   },
   {
-    icon: "📋",
+    icon: "❖",
     title: "Semantic Registry",
     desc: "Scope-aware symbol registry with nested environment chains and lexical scoping rules.",
   },
   {
-    icon: "🛡️",
+    icon: "❖",
     title: "Runtime Safety",
     desc: "Typed-value dispatch with runtime guards, null coercion protection, and call-stack depth limits.",
   },
   {
-    icon: "🧵",
+    icon: "❖",
     title: "Thread Isolation",
     desc: "Each concurrent task runs in an isolated interpreter context with no shared mutable state.",
   },
   {
-    icon: "📦",
+    icon: "❖",
     title: "CLI Packaging",
     desc: "Zero-dependency CLI distributable with shebang support, global install, and sub-command routing.",
   },
   {
-    icon: "🎨",
+    icon: "❖",
     title: "VS Code Grammar Mapping",
     desc: "Hand-crafted TextMate grammar with regex-scoped token matching for full syntax highlighting.",
   },
@@ -156,7 +156,21 @@ const AuraProject = () => {
   const { copied, copy } = useCopy();
 
   return (
-    <section id="aura" className="aura-section">
+    <section id="aura" className="aura-section relative bg-[#0F0A04] overflow-visible">
+      {/* Curved Divider Top */}
+      <div className="absolute top-0 left-0 right-0 overflow-hidden leading-[0] pointer-events-none z-10 -translate-y-[95%]">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-[45px] md:h-[110px] block">
+          <path d="M0,120 C480,0 960,0 1440,120 L1440,120 L0,120 Z" fill="#0F0A04" />
+        </svg>
+      </div>
+
+      {/* Curved Divider Bottom */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-[0] pointer-events-none z-10 translate-y-[95%]">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-[45px] md:h-[110px] block">
+          <path d="M0,0 L1440,0 L1440,120 C960,0 480,0 0,120 Z" fill="#0F0A04" />
+        </svg>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={{ position: "relative", zIndex: 1 }}>
 
         {/* ── SECTION HEADING ── */}
@@ -170,9 +184,9 @@ const AuraProject = () => {
           <div className="aura-title-tag">◆ Flagship Engineering Project</div>
           <h2
             style={{
-              fontSize: "clamp(2rem, 5vw, 3.2rem)",
-              fontWeight: 800,
-              background: "linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 50%, #c4b5fd 100%)",
+              fontSize: "clamp(3rem, 7vw, 4.5rem)",
+              fontWeight: 600,
+              background: "linear-gradient(135deg, #FFF7ED 0%, #FDDCA8 50%, #D4A76A 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -181,7 +195,7 @@ const AuraProject = () => {
           >
             AURA 2.0
           </h2>
-          <p style={{ color: "rgba(255,255,255,.45)", fontSize: "1rem" }}>
+          <p style={{ color: "rgba(255, 250, 240, 0.65)", fontSize: "1.1rem" }}>
             Explainable Offline Programming Language &amp; Compiler Ecosystem
           </p>
         </motion.div>
@@ -238,7 +252,7 @@ const AuraProject = () => {
               className="aura-btn-primary"
               id="aura-view-docs"
             >
-              <span>📄</span> View Docs
+              View Docs
             </a>
             <a
               href="https://github.com/Chakravarthi1999"
@@ -247,7 +261,7 @@ const AuraProject = () => {
               className="aura-btn-ghost"
               id="aura-github-repo"
             >
-              <span>⭐</span> GitHub Repo
+              GitHub Repo
             </a>
             <button
               className="aura-btn-ghost"
@@ -256,7 +270,7 @@ const AuraProject = () => {
                 document.getElementById("aura-architecture")?.scrollIntoView({ behavior: "smooth" });
               }}
             >
-              <span>🗺️</span> Architecture
+              Architecture
             </button>
             <a
               href="https://marketplace.visualstudio.com/"
@@ -265,7 +279,7 @@ const AuraProject = () => {
               className="aura-btn-ghost"
               id="aura-vscode-ext"
             >
-              <span>🧩</span> VS Code Extension
+              VS Code Extension
             </a>
           </div>
 
@@ -280,9 +294,7 @@ const AuraProject = () => {
           </div>
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════
-            2. ARCHITECTURE PIPELINE
-        ══════════════════════════════════════════════════════════ */}
+        {/* ── ARCHITECTURE PIPELINE ── */}
         <motion.div
           id="aura-architecture"
           initial="hidden"
@@ -291,7 +303,7 @@ const AuraProject = () => {
           variants={fadeUp}
           style={{ marginBottom: 56 }}
         >
-          <div className="aura-sub-title">⚙️ Compiler Pipeline</div>
+          <div className="aura-sub-title">Compiler Pipeline</div>
           <p className="aura-sub-desc">
             End-to-end architecture — every stage is isolated, testable, and inspectable
           </p>
@@ -312,9 +324,7 @@ const AuraProject = () => {
           </div>
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════
-            3. FEATURE GRID
-        ══════════════════════════════════════════════════════════ */}
+        {/* ── FEATURE GRID ── */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -322,7 +332,7 @@ const AuraProject = () => {
           variants={stagger}
           style={{ marginBottom: 56 }}
         >
-          <div className="aura-sub-title">🔧 Feature Modules</div>
+          <div className="aura-sub-title">Feature Modules</div>
           <p className="aura-sub-desc">Every module is independently designed and shipped</p>
           <div className="aura-feature-grid">
             {FEATURES.map((f, i) => (
@@ -342,9 +352,7 @@ const AuraProject = () => {
           </div>
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════
-            4. CODE DEMO
-        ══════════════════════════════════════════════════════════ */}
+        {/* ── CODE DEMO ── */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -352,7 +360,7 @@ const AuraProject = () => {
           variants={fadeUp}
           style={{ marginBottom: 56 }}
         >
-          <div className="aura-sub-title">💻 Code Playground</div>
+          <div className="aura-sub-title">Code Playground</div>
           <p className="aura-sub-desc">Real AURA syntax — from basics to advanced patterns</p>
 
           {/* tabs */}
@@ -364,9 +372,9 @@ const AuraProject = () => {
                 onClick={() => setActiveTab(tab)}
                 id={`aura-code-tab-${tab.toLowerCase()}`}
               >
-                {tab === "Basic" && "🟢 "}
-                {tab === "Intermediate" && "🟡 "}
-                {tab === "Advanced" && "🔴 "}
+                {tab === "Basic" && "• "}
+                {tab === "Intermediate" && "• "}
+                {tab === "Advanced" && "• "}
                 {tab}
               </button>
             ))}
@@ -396,9 +404,7 @@ const AuraProject = () => {
           </div>
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════
-            5. ENGINEERING CHALLENGES
-        ══════════════════════════════════════════════════════════ */}
+        {/* ── ENGINEERING CHALLENGES ── */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -406,7 +412,7 @@ const AuraProject = () => {
           variants={stagger}
           style={{ marginBottom: 56 }}
         >
-          <div className="aura-sub-title">🚧 Engineering Challenges</div>
+          <div className="aura-sub-title">Engineering Challenges</div>
           <p className="aura-sub-desc">
             Real problems solved — not tutorials, not wrappers
           </p>
@@ -426,9 +432,7 @@ const AuraProject = () => {
           </div>
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════
-            6. BUILD NOTE
-        ══════════════════════════════════════════════════════════ */}
+        {/* ── BUILD NOTE ── */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -436,7 +440,7 @@ const AuraProject = () => {
           variants={fadeUp}
         >
           <div className="aura-build-note" id="aura-build-note">
-            <div className="aura-build-note-icon">🛠️</div>
+            <div className="aura-build-note-icon">◆</div>
             <div>
               <div className="aura-build-note-text">
                 <strong>Built it to understand how languages actually work.</strong>{" "}

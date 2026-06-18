@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jordan Voss — Software Engineer</title>
+<meta name="description" content="Jordan Voss — full-stack engineer building fast, animated, well-engineered web experiences." />
+
+<!-- ============================================================
+  CUSTOMIZE ME — quick reference
+  1. Name / title:        search "Jordan Voss"
+  2. Hero headline/copy:   <section id="hero">
+  3. Tech ticker items:    <section id="ticker">
+  4. Projects:             <section id="work"> → .work-card blocks
+  5. Process steps:        <section id="process">
+  6. About bio + skills:   <section id="about">
+  7. Contact email/links:  <section id="contact">
+  8. Colors / fonts:       :root variables at top of <style>
+============================================================= -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ================= TOKENS ================= */
+  :root{
+    --void:#0a0a12;
+    --void-2:#13111f;
+    --void-3:#1a1729;
+    --ink:#ece9f7;
+    --mist:#8e89a8;
+    --mist-dim:#5e5a78;
+    --violet:#7c3aed;
+    --magenta:#f0299b;
+    --flare:#ff8a3d;
+    --grad: linear-gradient(125deg, var(--violet) 0%, var(--magenta) 55%, var(--flare) 100%);
+    --grad-soft: linear-gradient(125deg, rgba(124,58,237,.5) 0%, rgba(240,41,155,.5) 55%, rgba(255,138,61,.5) 100%);
+    --line: rgba(236,233,247,.1);
+    --radius: 18px;
+    --maxw: 1180px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(circle at 18% -10%, rgba(124,58,237,.22), transparent 55%),
+      radial-gradient(circle at 88% 10%, rgba(255,138,61,.12), transparent 50%);
+  }
+  img,canvas{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--violet); color:#fff;}
+
+  :focus-visible{
+    outline:2px solid var(--flare);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+  section{ position:relative; z-index:1; }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--mist);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--grad);
+  }
+
+  h1,h2,h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    line-height:1.05;
+    margin:0;
+    letter-spacing:-.01em;
+  }
+  p{ margin:0; color:var(--mist); line-height:1.65; }
+
+  .grad-text{
+    background:var(--grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* ================= NAV ================= */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:18px 0;
+    transition:background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.nav.scrolled{
+    background:rgba(10,10,18,.72);
+    backdrop-filter:blur(14px);
+    border-bottom-color:var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{
+    font-family:var(--font-mono);
+    font-weight:500;
+    font-size:16px;
+    letter-spacing:.02em;
+  }
+  .logo span{ color:var(--flare); }
+  nav.links{ display:flex; gap:32px; }
+  nav.links a{
+    font-size:14.5px; color:var(--mist);
+    position:relative; padding:4px 0;
+    transition:color .2s ease;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:-2px;
+    width:0; height:1px; background:var(--grad);
+    transition:width .25s ease;
+  }
+  nav.links a:hover::after{ width:100%; }
+
+  .btn{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    padding:11px 22px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .25s ease, border-color .25s ease, opacity .25s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:var(--grad);
+    color:#fff;
+    border:none;
+  }
+  .btn-primary:hover{ opacity:.92; }
+  .btn-ghost{ color:var(--ink); }
+  .btn-ghost:hover{ border-color:rgba(236,233,247,.35); }
+
+  .menu-toggle{ display:none; background:none; border:none; color:var(--ink); font-size:22px; cursor:pointer; }
+
+  /* ================= HERO ================= */
+  #hero{
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding-top:96px; padding-bottom:60px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:40px;
+    align-items:center;
+    width:100%;
+  }
+  .hero-copy h1{ font-size:clamp(40px,5.6vw,76px); margin-top:18px; }
+  .hero-copy p.lead{
+    font-size:18px; max-width:480px; margin-top:22px; color:var(--mist);
+  }
+  .hero-actions{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
+
+  .hero-stage{
+    position:relative;
+    height:520px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #hero-canvas{ width:100%; height:100%; position:absolute; inset:0; }
+  .orbit-chip{
+    position:absolute;
+    font-family:var(--font-mono);
+    font-size:12px;
+    padding:7px 13px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:rgba(19,17,31,.65);
+    backdrop-filter:blur(6px);
+    color:var(--ink);
+    white-space:nowrap;
+    pointer-events:none;
+    will-change:transform;
+  }
+
+  /* ================= TICKER ================= */
+  #ticker{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+    overflow:hidden;
+  }
+  .ticker-track{
+    display:flex;
+    gap:56px;
+    width:max-content;
+    animation:scroll-x 32s linear infinite;
+  }
+  @keyframes scroll-x{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  .ticker-track span{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--mist-dim);
+    letter-spacing:.04em;
+  }
+
+  /* ================= SECTION HEADS ================= */
+  .section-head{ margin-bottom:54px; max-width:560px; }
+  .section-head h2{ font-size:clamp(30px,3.6vw,44px); margin-top:14px; }
+  .section{ padding:120px 0; }
+
+  /* ================= WORK ================= */
+  .work-grid{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .work-card{
+    position:relative;
+    border-radius:var(--radius);
+    background:var(--void-2);
+    border:1px solid var(--line);
+    padding:30px;
+    overflow:hidden;
+    transform-style:preserve-3d;
+    transition:border-color .3s ease;
+    cursor:pointer;
+  }
+  .work-card::before{
+    content:"";
+    position:absolute; inset:-1px;
+    border-radius:inherit;
+    padding:1px;
+    background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(240,41,155,.55), transparent 60%);
+    opacity:0;
+    transition:opacity .35s ease;
+    pointer-events:none;
+  }
+  .work-card:hover::before{ opacity:1; }
+  .work-card:hover{ border-color:rgba(236,233,247,.22); }
+  .work-thumb{
+    height:190px;
+    border-radius:12px;
+    margin-bottom:24px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(124,58,237,.5), transparent 55%),
+      radial-gradient(circle at 80% 80%, rgba(255,138,61,.35), transparent 55%),
+      var(--void-3);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:13px; color:var(--mist-dim);
+  }
+  .work-card h3{ font-size:22px; margin-bottom:10px; }
+  .work-card .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
+  .work-card .tags span{
+    font-family:var(--font-mono); font-size:11.5px;
+    color:var(--mist);
+    padding:5px 10px;
+    border:1px solid var(--line);
+    border-radius:999px;
+  }
+  .work-card .num{
+    position:absolute; top:26px; right:30px;
+    font-family:var(--font-mono); font-size:13px; color:var(--mist-dim);
+  }
+
+  /* ================= PROCESS ================= */
+  .process-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+    position:relative;
+  }
+  .process-row::before{
+    content:"";
+    position:absolute; top:22px; left:0; right:0; height:1px;
+    background:var(--line);
+    z-index:0;
+  }
+  .process-step{ position:relative; z-index:1; padding-right:10px; }
+  .process-step .step-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--void);
+    background:var(--grad);
+    width:44px; height:44px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:22px;
+  }
+  .process-step h3{ font-size:18px; margin-bottom:10px; }
+  .process-step p{ font-size:14.5px; }
+
+  /* ================= ABOUT ================= */
+  .about-grid{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:64px;
+    align-items:start;
+  }
+  .about-frame{
+    aspect-ratio:4/5;
+    border-radius:var(--radius);
+    background:var(--void-2);
+    border:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .about-frame::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(124,58,237,.45), transparent 55%),
+      radial-gradient(circle at 75% 85%, rgba(255,138,61,.3), transparent 55%);
+  }
+  .about-frame .initials{
+    position:relative; z-index:1;
+    font-family:var(--font-display);
+    font-size:88px; font-weight:700;
+    color:rgba(236,233,247,.92);
+  }
+  .about-bio p{ font-size:16.5px; color:var(--ink); opacity:.85; margin-bottom:18px; }
+  .skill-groups{ margin-top:36px; display:grid; gap:22px; }
+  .skill-group h4{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--mist-dim); margin-bottom:12px; font-weight:500;
+  }
+  .skill-chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .skill-chips span{
+    font-size:13.5px; padding:7px 14px; border-radius:999px;
+    border:1px solid var(--line); color:var(--ink);
+  }
+
+  /* ================= CONTACT ================= */
+  #contact .panel{
+    border-radius:28px;
+    padding:80px 60px;
+    background:var(--void-2);
+    border:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+  }
+  #contact .panel::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(124,58,237,.35), transparent 50%),
+      radial-gradient(circle at 85% 80%, rgba(255,138,61,.25), transparent 50%);
+  }
+  #contact .panel > *{ position:relative; z-index:1; }
+  #contact h2{ font-size:clamp(32px,4.4vw,52px); max-width:680px; margin:14px auto 28px; }
+  .contact-actions{ display:flex; gap:16px; justify-content:center; margin-top:10px; flex-wrap:wrap; }
+  .social-row{ display:flex; gap:26px; justify-content:center; margin-top:46px; }
+  .social-row a{ font-family:var(--font-mono); font-size:13.5px; color:var(--mist); transition:color .2s ease; }
+  .social-row a:hover{ color:var(--ink); }
+
+  /* ================= FOOTER ================= */
+  footer{
+    border-top:1px solid var(--line);
+    padding:32px 0;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  footer p{ font-size:13px; color:var(--mist-dim); }
+  footer .top{ font-family:var(--font-mono); font-size:13px; color:var(--mist); cursor:pointer; }
+
+  /* ================= REVEAL ================= */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:980px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-stage{ height:340px; order:-1; }
+    .work-grid{ grid-template-columns:1fr; }
+    .process-row{ grid-template-columns:1fr 1fr; row-gap:36px; }
+    .process-row::before{ display:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-frame{ max-width:320px; }
+    #contact .panel{ padding:56px 28px; }
+  }
+  @media (max-width:640px){
+    nav.links{
+      position:absolute; top:64px; right:28px; left:28px;
+      flex-direction:column; gap:18px;
+      background:rgba(253,220,168,.95);
+      border:1px solid rgba(212,167,106,.3);
+      border-radius:14px; padding:22px;
+      display:none;
+    }
+    nav.links.open{ display:flex; }
+    .menu-toggle{ display:block; }
+    .nav-cta{ display:none; }
+    .process-row{ grid-template-columns:1fr; }
+    .hero-actions{ flex-direction:column; align-items:flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .ticker-track{ animation:none; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="siteNav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#hero">JV<span>.</span>dev</a>
+    <nav class="links" id="navLinks">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="#contact" class="btn btn-primary nav-cta">Let's talk</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section id="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span>Available for new projects</span>
+        <h1>I build interfaces<br>that <span class="grad-text">move.</span></h1>
+        <p class="lead">Full-stack engineer crafting fast, animated, and carefully over‑engineered web experiences — from idea to production.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">View work</a>
+          <a href="#" class="btn btn-ghost">Download résumé</a>
+        </div>
+      </div>
+      <div class="hero-stage" id="heroStage">
+        <canvas id="hero-canvas"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TICKER ================= -->
+  <section id="ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <span>TypeScript</span><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>Three.js</span><span>GraphQL</span><span>Docker</span><span>AWS</span><span>Rust</span><span>WebGL</span>
+      <span>TypeScript</span><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>Three.js</span><span>GraphQL</span><span>Docker</span><span>AWS</span><span>Rust</span><span>WebGL</span>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section id="work" class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Selected work</span>
+        <h2>Four problems worth solving twice.</h2>
+      </div>
+      <div class="work-grid">
+
+        <div class="work-card reveal" data-tilt>
+          <span class="num">01</span>
+          <div class="work-thumb">Dashboard preview</div>
+          <h3>Nimbus</h3>
+          <p>A real-time analytics dashboard processing 40k events/sec with sub-100ms render latency.</p>
+          <div class="tags"><span>TypeScript</span><span>WebSockets</span><span>D3.js</span></div>
+        </div>
+
+        <div class="work-card reveal" data-tilt>
+          <span class="num">02</span>
+          <div class="work-thumb">Map editor preview</div>
+          <h3>Cartograph</h3>
+          <p>A collaborative map editor with live multiplayer cursors and conflict-free offline sync.</p>
+          <div class="tags"><span>React</span><span>Mapbox GL</span><span>CRDT</span></div>
+        </div>
+
+        <div class="work-card reveal" data-tilt>
+          <span class="num">03</span>
+          <div class="work-thumb">CMS preview</div>
+          <h3>Pulse CMS</h3>
+          <p>A headless content engine powering 200+ storefronts with sub-second global edge delivery.</p>
+          <div class="tags"><span>Next.js</span><span>GraphQL</span><span>Postgres</span></div>
+        </div>
+
+        <div class="work-card reveal" data-tilt>
+          <span class="num">04</span>
+          <div class="work-thumb">3D configurator preview</div>
+          <h3>Atlas3D</h3>
+          <p>An in-browser 3D product configurator rendering at 60fps on mid-range mobile hardware.</p>
+          <div class="tags"><span>Three.js</span><span>WebGL</span><span>WASM</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section id="process" class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How a build comes together</span>
+        <h2>Four stages. No shortcuts.</h2>
+      </div>
+      <div class="process-row reveal">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3>Discover</h3>
+          <p>Pin down the real problem, the constraints, and what "done" actually means.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3>Design</h3>
+          <p>Sketch the system and the screens together — architecture and interface, same sentence.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3>Build</h3>
+          <p>Ship small, working slices. Tests and types carry the weight, not memory.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <h3>Ship</h3>
+          <p>Deploy, measure, and hand off something the next engineer won't dread opening.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="section">
+    <div class="wrap about-grid">
+      <div class="about-frame reveal">
+        <span class="initials">JV</span>
+      </div>
+      <div class="about-bio reveal">
+        <span class="eyebrow">About</span>
+        <h2 style="margin-top:14px; font-size:clamp(28px,3.2vw,38px);">Eight years of turning ambitious ideas into software that ships.</h2>
+        <p style="margin-top:24px;">I'm Jordan — a full-stack engineer who likes problems with a real-time component and a deadline. I've spent the last few years building dashboards, editors, and 3D tools for teams who needed something that worked under load, not just in a demo.</p>
+        <p>Outside of client work, I maintain a couple of open-source visualization libraries and occasionally write about WebGL performance.</p>
+        <div class="skill-groups">
+          <div class="skill-group">
+            <h4>Languages</h4>
+            <div class="skill-chips"><span>TypeScript</span><span>Python</span><span>Rust</span><span>SQL</span></div>
+          </div>
+          <div class="skill-group">
+            <h4>Frontend</h4>
+            <div class="skill-chips"><span>React</span><span>Vue</span><span>Three.js</span><span>WebGL</span></div>
+          </div>
+          <div class="skill-group">
+            <h4>Backend &amp; infra</h4>
+            <div class="skill-chips"><span>Node.js</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span><span>AWS</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="section">
+    <div class="wrap">
+      <div class="panel reveal">
+        <span class="eyebrow"><span class="dot"></span>Currently open to new work</span>
+        <h2>Got an idea worth<br>building <span class="grad-text">properly?</span></h2>
+        <div class="contact-actions">
+          <a href="mailto:hello@jordanvoss.dev" class="btn btn-primary">hello@jordanvoss.dev</a>
+          <a href="#" class="btn btn-ghost">Schedule a call</a>
+        </div>
+        <div class="social-row">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">X / Twitter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between;">
+    <p>© 2026 Jordan Voss. Built with too much attention to detail.</p>
+    <span class="top" id="backToTop">Back to top ↑</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- NAV ---------- */
+  var navEl = document.getElementById('siteNav');
+  window.addEventListener('scroll', function(){
+    navEl.classList.toggle('scrolled', window.scrollY > 12);
+  });
+  var menuToggle = document.getElementById('menuToggle');
+  var navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', function(){
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ navLinks.classList.remove('open'); });
+  });
+  document.getElementById('backToTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+
+  /* ---------- SCROLL REVEAL ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.15 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  /* ---------- TILT CARDS ---------- */
+  if(!reduceMotion){
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        var rx = (py - 0.5) * -8;
+        var ry = (px - 0.5) * 8;
+        card.style.transform = 'perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-4px)';
+        card.style.setProperty('--mx', (px*100)+'%');
+        card.style.setProperty('--my', (py*100)+'%');
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateY(0)';
+      });
+    });
+  }
+
+  /* ---------- HERO 3D SCENE ---------- */
+  var stage = document.getElementById('heroStage');
+  var canvas = document.getElementById('hero-canvas');
+
+  if(window.THREE && stage && canvas){
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, stage.clientWidth / stage.clientHeight, 0.1, 100);
+    camera.position.set(0, 0, 7);
+
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(stage.clientWidth, stage.clientHeight);
+
+    var group = new THREE.Group();
+    scene.add(group);
+
+    var coreGeo = new THREE.IcosahedronGeometry(1.6, 1);
+    var coreEdges = new THREE.EdgesGeometry(coreGeo);
+    var coreMat = new THREE.LineBasicMaterial({ color: 0x7c3aed, transparent:true, opacity:0.85 });
+    var coreLines = new THREE.LineSegments(coreEdges, coreMat);
+    group.add(coreLines);
+
+    var outerGeo = new THREE.IcosahedronGeometry(2.3, 0);
+    var outerEdges = new THREE.EdgesGeometry(outerGeo);
+    var outerMat = new THREE.LineBasicMaterial({ color: 0xf0299b, transparent:true, opacity:0.35 });
+    var outerLines = new THREE.LineSegments(outerEdges, outerMat);
+    group.add(outerLines);
+
+    var glowGeo = new THREE.IcosahedronGeometry(1.1, 0);
+    var glowMat = new THREE.MeshBasicMaterial({ color: 0xff8a3d, transparent:true, opacity:0.12 });
+    var glowMesh = new THREE.Mesh(glowGeo, glowMat);
+    group.add(glowMesh);
+
+    var starCount = 160;
+    var starPos = new Float32Array(starCount * 3);
+    for(var i=0;i<starCount;i++){
+      var r = 4.5 + Math.random()*3.5;
+      var theta = Math.random()*Math.PI*2;
+      var phi = Math.acos((Math.random()*2)-1);
+      starPos[i*3]   = r*Math.sin(phi)*Math.cos(theta);
+      starPos[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+      starPos[i*3+2] = r*Math.cos(phi);
+    }
+    var starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    var starMat = new THREE.PointsMaterial({ color:0xece9f7, size:0.035, transparent:true, opacity:0.55 });
+    var stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
+
+    var mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', function(e){
+      mouseX = (e.clientX / window.innerWidth) - 0.5;
+      mouseY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
+    var clock = new THREE.Clock();
+    var hue = 0;
+
+    if(reduceMotion){
+      // Static, calm composition: no continuous animation loop.
+      group.rotation.set(0.3, 0.5, 0);
+      coreMat.color.setHSL(0.7, 0.7, 0.62);
+      outerMat.color.setHSL(0.86, 0.8, 0.6);
+      renderer.render(scene, camera);
+    } else {
+      var animate = function(){
+        requestAnimationFrame(animate);
+        var dt = clock.getDelta();
+        var t = clock.getElapsedTime();
+
+        group.rotation.y += dt * 0.18;
+        group.rotation.x += dt * 0.06;
+        outerLines.rotation.y -= dt * 0.1;
+        stars.rotation.y += dt * 0.01;
+
+        group.rotation.y += (mouseX*0.6 - group.rotation.y*0.02) * dt * 1.4;
+        group.rotation.x += (mouseY*0.4 - group.rotation.x*0.02) * dt * 1.4;
+
+        hue = (0.62 + Math.sin(t*0.15)*0.12 + 1) % 1;
+        coreMat.color.setHSL(hue, 0.75, 0.62);
+        outerMat.color.setHSL((hue+0.18)%1, 0.8, 0.6);
+        glowMesh.scale.setScalar(1 + Math.sin(t*0.8)*0.06);
+
+        renderer.render(scene, camera);
+      };
+      animate();
+    }
+
+    window.addEventListener('resize', function(){
+      var w = stage.clientWidth, h = stage.clientHeight;
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+
+    /* ---------- ORBITING SKILL CHIPS ---------- */
+    var chipLabels = ['React','Node.js','TypeScript','GraphQL','Three.js'];
+    var chips = chipLabels.map(function(label, idx){
+      var el = document.createElement('div');
+      el.className = 'orbit-chip';
+      el.textContent = label;
+      stage.appendChild(el);
+      return { el:el, offset: idx * (Math.PI*2/chipLabels.length), radiusX: stage.clientWidth*0.46, radiusY: stage.clientHeight*0.38, speed: 0.18 + idx*0.015 };
+    });
+
+    function positionChip(c, angle){
+      var cx = stage.clientWidth/2, cy = stage.clientHeight/2;
+      var x = cx + Math.cos(angle) * c.radiusX;
+      var y = cy + Math.sin(angle) * c.radiusY * 0.6;
+      var scale = 0.75 + (Math.sin(angle)+1)/2 * 0.4;
+      var opacity = 0.45 + (Math.sin(angle)+1)/2 * 0.55;
+      c.el.style.transform = 'translate('+(x - c.el.offsetWidth/2)+'px,'+(y - c.el.offsetHeight/2)+'px) scale('+scale+')';
+      c.el.style.opacity = opacity;
+      c.el.style.zIndex = Math.round(scale*10);
+    }
+
+    if(reduceMotion){
+      chips.forEach(function(c){ positionChip(c, c.offset); });
+    } else {
+      (function animateChips(){
+        requestAnimationFrame(animateChips);
+        var t = clock.getElapsedTime();
+        chips.forEach(function(c){ positionChip(c, t * c.speed + c.offset); });
+      })();
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
