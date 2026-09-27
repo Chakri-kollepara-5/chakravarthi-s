@@ -38,6 +38,18 @@ export const skills = [
     image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
   },
   {
+    name: 'FastAPI',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg',
+  },
+  {
+    name: 'PHP',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+  },
+  {
+    name: 'REST APIs',
+    image: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/postman-icon.png',
+  },
+  {
     name: 'Express.js',
     image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
   },
@@ -49,6 +61,26 @@ export const skills = [
     name: 'MongoDB',
     image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
   },
+  {
+    name: 'Docker',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+  },
 
- 
+  // ===== AI & ML =====
+  {
+    name: 'AI / ML',
+    image: 'https://i.imgur.com/lW39N2h.jpeg',
+  },
+  {
+    name: 'RAG',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+  },
+  {
+    name: 'LLM',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+  },
+  {
+    name: 'LangChain',
+    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+  },
 ];
